@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foreverland · Bracket Picks</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --red:#C8102E;--navy:#0A1628;--navy-mid:#112040;--blue:#1B3A6B;
+  --gold:#F0A500;--gold-l:#FFD060;--green:#00C46A;
+  --bg:#070E1C;--surface:#0D1A30;--surface2:#132038;--surface3:#1A2A48;
+  --text:#F0F4FF;--muted:#7A90B8;--border:#1E3055;
+  --font-d:'Barlow Condensed',sans-serif;--font-b:'Barlow',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent;}
+button{-webkit-tap-highlight-color:transparent;font-family:var(--font-b);}
+
+/* ── HEADER ── */
+.header{background:var(--navy);border-bottom:2px solid var(--red);padding:11px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;}
+.header-title{font-family:var(--font-d);font-size:19px;font-weight:900;text-transform:uppercase;letter-spacing:0.04em;}
+.header-title span{color:var(--red);}
+.header-user{margin-left:auto;font-family:var(--font-d);font-size:12px;font-weight:700;text-transform:uppercase;color:var(--gold);display:none;}
+
+/* ── LOGIN ── */
+.login-screen{min-height:calc(100vh - 52px);display:flex;align-items:center;justify-content:center;padding:24px;}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px;width:100%;max-width:330px;}
+.login-title{font-family:var(--font-d);font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:4px;}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.4;}
+.lbl{font-family:var(--font-d);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:5px;display:block;}
+.login-select,.login-pin{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:15px;padding:10px 13px;margin-bottom:14px;outline:none;-webkit-appearance:none;}
+.login-select:focus,.login-pin:focus{border-color:var(--red);}
+.login-pin{font-size:22px;letter-spacing:0.3em;text-align:center;font-weight:700;}
+.login-btn{width:100%;background:var(--red);color:#fff;font-family:var(--font-d);font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;padding:12px;border:none;border-radius:6px;cursor:pointer;}
+.login-err{color:var(--red);font-size:12px;margin-top:8px;font-weight:600;display:none;}
+
+/* ── SLIDE NAV BAR ── */
+.slide-nav{background:var(--navy-mid);border-bottom:1px solid var(--border);display:flex;align-items:stretch;position:sticky;top:52px;z-index:100;overflow-x:auto;scrollbar-width:none;}
+.slide-nav::-webkit-scrollbar{display:none;}
+.slide-nav-btn{flex:1;min-width:80px;padding:10px 6px;font-family:var(--font-d);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color 0.15s;}
+.slide-nav-btn:hover{color:var(--text);}
+.slide-nav-btn.active{color:var(--white);border-bottom-color:var(--red);}
+.slide-nav-btn.done{color:var(--green);}
+.slide-nav-btn.active.done{border-bottom-color:var(--green);}
+.nav-count{font-size:9px;font-weight:800;padding:1px 5px;border-radius:8px;background:var(--surface3);}
+.nav-count.complete{background:rgba(0,196,106,0.2);color:var(--green);}
+
+/* ── SLIDER ── */
+.slider-outer{overflow:hidden;width:100%;}
+.slider-track{display:flex;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);will-change:transform;}
+.slide{min-width:100%;padding:16px 14px 100px;}
+
+/* ── ROUND HEADER ── */
+.round-title{font-family:var(--font-d);font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px;}
+.round-title span{color:var(--red);}
+.round-sub{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:16px;}
+
+/* ── MATCHUP CARD ── */
+.matchup{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px;}
+.matchup-label{padding:5px 12px 4px;background:var(--navy-mid);font-family:var(--font-d);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);display:flex;justify-content:space-between;align-items:center;}
+.matchup-label .winner-tag{color:var(--green);font-size:9px;font-weight:800;}
+.matchup-body{display:grid;grid-template-columns:1fr 36px 1fr;}
+.team-side{display:flex;flex-direction:column;align-items:center;padding:12px 10px 10px;gap:5px;cursor:pointer;border:none;background:transparent;color:var(--text);transition:background 0.12s;width:100%;}
+.team-side:hover{background:var(--surface2);}
+.team-side.selected{background:rgba(200,16,46,0.1);}
+.team-side.eliminated{opacity:0.35;}
+.team-side.tbd{opacity:0.35;cursor:default;pointer-events:none;}
+.team-flag-lg{font-size:28px;line-height:1;}
+.team-name-lg{font-family:var(--font-d);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.02em;text-align:center;line-height:1.2;}
+.team-tick{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;transition:all 0.15s;}
+.team-side.selected .team-tick{background:var(--red);border-color:var(--red);color:#fff;}
+.vs-col{display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:11px;font-weight:700;color:var(--muted);}
+
+/* ── CHAMPION REVEAL ── */
+.champ-card{background:linear-gradient(135deg,rgba(240,165,0,0.1),rgba(240,165,0,0.18));border:2px solid var(--gold);border-radius:12px;padding:24px;text-align:center;margin-top:8px;}
+.champ-lbl{font-family:var(--font-d);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.16em;color:var(--gold);margin-bottom:12px;}
+.champ-pick{font-family:var(--font-d);font-size:24px;font-weight:900;text-transform:uppercase;color:var(--gold-l);display:flex;align-items:center;justify-content:center;gap:10px;}
+.champ-flag{font-size:44px;}
+
+/* ── BOTTOM NAV ── */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--navy);border-top:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.prev-btn,.next-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--font-d);font-size:13px;font-weight:800;text-transform:uppercase;padding:10px 18px;border-radius:6px;cursor:pointer;flex-shrink:0;}
+.prev-btn:disabled,.next-btn:disabled{opacity:0.3;cursor:default;}
+.save-btn{flex:1;background:var(--red);color:#fff;font-family:var(--font-d);font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:10px;border:none;border-radius:6px;cursor:pointer;}
+.save-btn:disabled{opacity:0.35;cursor:default;}
+.mid-info{flex:1;text-align:center;}
+.prog-bar{height:3px;background:var(--surface3);border-radius:2px;margin-bottom:3px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.3s;}
+.prog-text{font-size:10px;color:var(--muted);font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="font-size:18px">⚽</div>
+  <div class="header-title">Foreverland <span>2026</span></div>
+  <div class="header-user" id="header-user"></div>
+</div>
+
+<!-- LOGIN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-title">Bracket <span style="color:var(--red)">Picks</span></div>
+    <div class="login-sub">Pick the winner of every match — your picks cascade automatically to the next round.</div>
+    <label class="lbl">Your name</label>
+    <select class="login-select" id="login-name">
+      <option value="">— Select name —</option>
+    </select>
+    <label class="lbl">4-digit PIN</label>
+    <input class="login-pin" id="login-pin" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+    <div style="background:rgba(200,16,46,0.1);border:1px solid var(--red);border-radius:6px;padding:12px;text-align:center;margin-top:8px;"><div style="font-family:var(--font-d);font-size:16px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">🔒 Bracket Locked</div><div style="font-size:13px;color:var(--muted);">All picks have been submitted. The bracket is now locked for the knockout stage.</div></div>
+  </div>
+</div>
+
+<!-- PICKER -->
+<div id="picker-screen" style="display:none">
+  <!-- Round tabs -->
+  <div class="slide-nav" id="slide-nav"></div>
+
+  <!-- Slides -->
+  <div class="slider-outer">
+    <div class="slider-track" id="slider-track"></div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <button class="prev-btn" id="prev-btn" onclick="goSlide(curSlide-1)" disabled>← Back</button>
+    <div class="mid-info">
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="prog-text" id="prog-text">0 / 31 picks</div>
+    </div>
+    <button class="next-btn" id="next-btn" onclick="goSlide(curSlide+1)">Next →</button>
+    <button class="save-btn" id="save-btn" onclick="savePicks()" style="display:none" disabled>Save 🏆</button>
+  </div>
+</div>
+
+<script>
+const WORKER = 'https://wc2026.drsteelheader.workers.dev';
+
+const PASSWORDS = {
+  "Matty chom":"1234","Sambath":"2345","Master":"3456","AJ":"4567",
+  "Huy":"5678","Minh":"6789","Sith":"7890","Tigers nephew":"8901",
+  "Rolando":"9012","Peter H":"0123","Shanny":"1357","Noks":"2468","Carlo":"3579"
+};
+
+const F = {
+  "MEXICO":"🇲🇽","SOUTH AFRICA":"🇿🇦","KOREA REPUBLIC":"🇰🇷","CZECHIA":"🇨🇿",
+  "CANADA":"🇨🇦","BOSNIA":"🇧🇦","QATAR":"🇶🇦","SWITZERLAND":"🇨🇭",
+  "BRAZIL":"🇧🇷","MOROCCO":"🇲🇦","HAITI":"🇭🇹","SCOTLAND":"🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+  "USA":"🇺🇸","PARAGUAY":"🇵🇾","AUSTRALIA":"🇦🇺","TURKIYE":"🇹🇷",
+  "GERMANY":"🇩🇪","CURACAO":"🇨🇼","COTE DIVOIRE":"🇨🇮","ECUADOR":"🇪🇨",
+  "NETHERLANDS":"🇳🇱","JAPAN":"🇯🇵","SWEDEN":"🇸🇪","TUNISIA":"🇹🇳",
+  "BELGIUM":"🇧🇪","EGYPT":"🇪🇬","IRAN":"🇮🇷","NEW ZEALAND":"🇳🇿",
+  "SPAIN":"🇪🇸","CABO VERDE":"🇨🇻","SAUDI ARABIA":"🇸🇦","URUGUAY":"🇺🇾",
+  "FRANCE":"🇫🇷","SENEGAL":"🇸🇳","IRAQ":"🇮🇶","NORWAY":"🇳🇴",
+  "ARGENTINA":"🇦🇷","ALGERIA":"🇩🇿","AUSTRIA":"🇦🇹","JORDAN":"🇯🇴",
+  "PORTUGAL":"🇵🇹","CONGO DR":"🇨🇩","UZBEKISTAN":"🇺🇿","COLOMBIA":"🇨🇴",
+  "ENGLAND":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","CROATIA":"🇭🇷","GHANA":"🇬🇭","PANAMA":"🇵🇦"
+};
+const flag = t => t ? (F[t]||'🏳') : '❓';
+
+// ── BRACKET STRUCTURE ────────────────────────────────────────────────────────
+// Fixed R32 matchups (confirmed by FIFA/Yahoo/ESPN)
+const R32 = [
+  // Match ID, home, away — order matters for R16 pairing
+  {id:'r32_1', home:'SOUTH AFRICA', away:'CANADA'},        // → R16 slot 1
+  {id:'r32_2', home:'BRAZIL',       away:'JAPAN'},          // → R16 slot 1
+  {id:'r32_3', home:'GERMANY',      away:'PARAGUAY'},       // → R16 slot 2
+  {id:'r32_4', home:'NETHERLANDS',  away:'MOROCCO'},        // → R16 slot 2
+  {id:'r32_5', home:'COTE DIVOIRE', away:'NORWAY'},         // → R16 slot 3
+  {id:'r32_6', home:'FRANCE',       away:'SWEDEN'},         // → R16 slot 3
+  {id:'r32_7', home:'MEXICO',       away:'ECUADOR'},        // → R16 slot 4
+  {id:'r32_8', home:'ENGLAND',      away:'CONGO DR'},       // → R16 slot 4
+  {id:'r32_9', home:'BELGIUM',      away:'SENEGAL'},        // → R16 slot 5
+  {id:'r32_10',home:'USA',          away:'BOSNIA'},         // → R16 slot 5
+  {id:'r32_11',home:'PORTUGAL',     away:'CROATIA'},        // → R16 slot 6
+  {id:'r32_12',home:'SWITZERLAND',  away:'ALGERIA'},        // → R16 slot 6
+  {id:'r32_13',home:'AUSTRALIA',    away:'EGYPT'},          // → R16 slot 7
+  {id:'r32_14',home:'SPAIN',        away:'AUSTRIA'},        // → R16 slot 7
+  {id:'r32_15',home:'ARGENTINA',    away:'CABO VERDE'},     // → R16 slot 8
+  {id:'r32_16',home:'COLOMBIA',     away:'GHANA'},          // → R16 slot 8
+];
+
+// R16 — exact FIFA match numbers mapped to our R32 ids
+// m89: winner m74(Ger/Par) vs winner m77(Fra/Swe)  → r32_3 vs r32_6
+// m90: winner m73(SA/Can)  vs winner m75(Ned/Mor)  → r32_1 vs r32_4
+// m91: winner m76(Bra/Jpn) vs winner m78(CIV/Nor)  → r32_2 vs r32_5
+// m92: winner m79(Mex/Ecu) vs winner m80(Eng/Con)  → r32_7 vs r32_8
+// m93: winner m83(Por/Cro) vs winner m84(Spa/Aut)  → r32_11 vs r32_14
+// m94: winner m81(Bel/Sen) vs winner m82(USA/Bos)  → r32_9 vs r32_10
+// m95: winner m86(Arg/CV)  vs winner m88(Aus/Egy)  → r32_15 vs r32_13
+// m96: winner m85(Swi/Alg) vs winner m87(Col/Gha)  → r32_12 vs r32_16
+const R16 = [
+  {id:'r16_89', a:'r32_3',  b:'r32_6'},   // Ger/Par vs Fra/Swe
+  {id:'r16_90', a:'r32_1',  b:'r32_4'},   // SA/Can  vs Ned/Mor
+  {id:'r16_91', a:'r32_2',  b:'r32_5'},   // Bra/Jpn vs CIV/Nor
+  {id:'r16_92', a:'r32_7',  b:'r32_8'},   // Mex/Ecu vs Eng/Con
+  {id:'r16_93', a:'r32_11', b:'r32_14'},  // Por/Cro vs Spa/Aut
+  {id:'r16_94', a:'r32_9',  b:'r32_10'},  // Bel/Sen vs USA/Bos
+  {id:'r16_95', a:'r32_15', b:'r32_13'},  // Arg/CV  vs Aus/Egy
+  {id:'r16_96', a:'r32_12', b:'r32_16'},  // Swi/Alg vs Col/Gha
+];
+
+// QF — exact FIFA match numbers
+// m97: winner m89 vs winner m90  → r16_89 vs r16_90
+// m98: winner m93 vs winner m94  → r16_93 vs r16_94
+// m99: winner m91 vs winner m92  → r16_91 vs r16_92
+// m100: winner m95 vs winner m96 → r16_95 vs r16_96
+const QF = [
+  {id:'qf_97',  a:'r16_89', b:'r16_90'},  // (Ger/Fra side) vs (Can/Ned side)
+  {id:'qf_98',  a:'r16_93', b:'r16_94'},  // (Por/Spa side) vs (Bel/USA side)
+  {id:'qf_99',  a:'r16_91', b:'r16_92'},  // (Bra/CIV side) vs (Mex/Eng side)
+  {id:'qf_100', a:'r16_95', b:'r16_96'},  // (Arg/Aus side) vs (Swi/Col side)
+];
+
+// SF — exact FIFA match numbers
+// m101: winner m97 vs winner m98
+// m102: winner m99 vs winner m100
+const SF = [
+  {id:'sf_101', a:'qf_97',  b:'qf_98'},
+  {id:'sf_102', a:'qf_99',  b:'qf_100'},
+];
+
+// Final — m104: winner m101 vs winner m102
+const FINAL = [{id:'final', a:'sf_101', b:'sf_102'}];
+
+const ROUNDS = [
+  {key:'r32', label:'Round of 32', pts:2,  matches:R32, fixed:true},
+  {key:'r16', label:'Round of 16', pts:4,  matches:R16, fixed:false},
+  {key:'qf',  label:'Quarter-Finals', pts:6,  matches:QF,  fixed:false},
+  {key:'sf',  label:'Semi-Finals', pts:10, matches:SF,  fixed:false},
+  {key:'final',label:'Final',      pts:15, matches:FINAL,fixed:false},
+];
+// ─────────────────────────────────────────────────────────────────────────────
+
+let picks = {}; // matchId → teamName
+let currentUser = null;
+let curSlide = 0;
+
+// Login setup
+const sel = document.getElementById('login-name');
+Object.keys(PASSWORDS).forEach(n => {
+  const o = document.createElement('option');
+  o.value = n; o.textContent = n; sel.appendChild(o);
+});
+document.getElementById('login-pin').addEventListener('input', e => {
+  e.target.value = e.target.value.replace(/\D/g,'').slice(0,4);
+});
+document.getElementById('login-pin').addEventListener('keydown', e => {
+  if(e.key==='Enter') doLogin();
+});
+
+function doLogin() {
+  const name = document.getElementById('login-name').value;
+  const pin  = document.getElementById('login-pin').value;
+  const err  = document.getElementById('login-err');
+  err.style.display = 'none';
+  if(!name){err.textContent='Select your name.';err.style.display='block';return;}
+  if(PASSWORDS[name]!==pin){err.textContent='Incorrect PIN. Try again.';err.style.display='block';return;}
+  currentUser = name;
+  document.getElementById('header-user').textContent = name;
+  document.getElementById('header-user').style.display = 'block';
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('picker-screen').style.display = 'block';
+  try{ const s=localStorage.getItem('bp_'+currentUser); if(s) picks=JSON.parse(s); }catch(e){}
+  buildUI();
+}
+
+function getWinner(id) { return picks[id] || null; }
+
+function getMatchTeams(match, fixed) {
+  if(fixed) return {home: match.home, away: match.away};
+  return {home: getWinner(match.a), away: getWinner(match.b)};
+}
+
+function cascadeClear(changedId) {
+  const all = [...R16,...QF,...SF,...FINAL];
+  all.forEach(m => {
+    if(m.a === changedId || m.b === changedId) {
+      const {home, away} = getMatchTeams(m, false);
+      const cur = picks[m.id];
+      if(cur && cur !== home && cur !== away) {
+        delete picks[m.id];
+        cascadeClear(m.id);
+      }
+    }
+  });
+}
+
+function pick(matchId, team) {
+  picks[matchId] = team;
+  cascadeClear(matchId);
+  localStorage.setItem('bp_'+currentUser, JSON.stringify(picks));
+  renderAll();
+
+  // Check if current round is now complete — auto-advance after short delay
+  const roundIdx = ROUNDS.findIndex(r => r.matches.some(m => m.id === matchId));
+  if (roundIdx >= 0) {
+    const round = ROUNDS[roundIdx];
+    const allDone = round.matches.every(m => picks[m.id]);
+    if (allDone && curSlide === roundIdx) {
+      setTimeout(() => goSlide(roundIdx + 1), 500);
+    }
+  }
+  // Also auto-advance from champion slide when final is picked
+  if (matchId === 'final' && curSlide === ROUNDS.length) {
+    // already on last slide, nothing to advance to
+  }
+}
+
+// ── BUILD UI ──────────────────────────────────────────────────────────────────
+function buildUI() {
+  const nav = document.getElementById('slide-nav');
+  const track = document.getElementById('slider-track');
+  nav.innerHTML = ''; track.innerHTML = '';
+
+  ROUNDS.forEach((round, idx) => {
+    // Nav tab
+    const btn = document.createElement('button');
+    btn.className = 'slide-nav-btn' + (idx===0?' active':'');
+    btn.id = `nav-${idx}`;
+    btn.onclick = () => goSlide(idx);
+    btn.innerHTML = `<span>${round.label}</span><span class="nav-count" id="nav-count-${idx}">0/${round.matches.length}</span>`;
+    nav.appendChild(btn);
+
+    // Slide
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    slide.id = `slide-${idx}`;
+    track.appendChild(slide);
+  });
+
+  // Champion slide
+  const champNav = document.createElement('button');
+  champNav.className = 'slide-nav-btn';
+  champNav.id = `nav-${ROUNDS.length}`;
+  champNav.onclick = () => goSlide(ROUNDS.length);
+  champNav.innerHTML = `<span>🏆 Champion</span><span class="nav-count" id="nav-count-${ROUNDS.length}">?</span>`;
+  nav.appendChild(champNav);
+
+  const champSlide = document.createElement('div');
+  champSlide.className = 'slide';
+  champSlide.id = `slide-${ROUNDS.length}`;
+  track.appendChild(champSlide);
+
+  renderAll();
+  goSlide(0);
+}
+
+function renderAll() {
+  ROUNDS.forEach((round, idx) => renderSlide(idx, round));
+  renderChampSlide();
+  updateProgress();
+}
+
+function renderSlide(idx, round) {
+  const slide = document.getElementById(`slide-${idx}`);
+  const done = round.matches.filter(m => picks[m.id]).length;
+  const total = round.matches.length;
+
+  let html = `<div class="round-title">${round.label} <span style="font-size:14px;color:var(--gold)">${round.pts}pts each</span></div>
+    <div class="round-sub">${done}/${total} picks made · pick the winner of each match</div>`;
+
+  round.matches.forEach((match, mi) => {
+    const {home, away} = getMatchTeams(match, round.fixed);
+    const winner = picks[match.id] || null;
+    const tbd = !home || !away;
+    const matchNum = round.fixed ? `Match ${mi+1}` : (tbd ? 'Awaiting earlier picks' : 'Pick winner');
+
+    const homeOnclick = (tbd || !home) ? '' : `onclick="pick('${match.id}','${home}')"`;
+    const awayOnclick = (tbd || !away) ? '' : `onclick="pick('${match.id}','${away}')"`;
+
+    html += `<div class="matchup">
+      <div class="matchup-label">
+        <span>${matchNum}</span>
+        ${winner ? `<span class="winner-tag">✓ ${winner}</span>` : ''}
+      </div>
+      <div class="matchup-body">
+        <button class="team-side ${winner===home?'selected':''} ${winner&&winner!==home?'eliminated':''} ${!home?'tbd':''}"
+          ${!home?'disabled':''} ${homeOnclick}>
+          <div class="team-flag-lg">${flag(home)}</div>
+          <div class="team-name-lg">${home||'TBD'}</div>
+          <div class="team-tick">${winner===home?'✓':''}</div>
+        </button>
+        <div class="vs-col">vs</div>
+        <button class="team-side ${winner===away?'selected':''} ${winner&&winner!==away?'eliminated':''} ${!away?'tbd':''}"
+          ${!away?'disabled':''} ${awayOnclick}>
+          <div class="team-flag-lg">${flag(away)}</div>
+          <div class="team-name-lg">${away||'TBD'}</div>
+          <div class="team-tick">${winner===away?'✓':''}</div>
+        </button>
+      </div>
+    </div>`;
+  });
+
+  slide.innerHTML = html;
+
+  // Update nav count
+  const cnt = document.getElementById(`nav-count-${idx}`);
+  if(cnt){ cnt.textContent=`${done}/${total}`; cnt.className=`nav-count${done===total?' complete':''}`; }
+  const navBtn = document.getElementById(`nav-${idx}`);
+  if(navBtn) navBtn.className=`slide-nav-btn${curSlide===idx?' active':''}${done===total?' done':''}`;
+}
+
+function renderChampSlide() {
+  const idx = ROUNDS.length;
+  const slide = document.getElementById(`slide-${idx}`);
+  const finalist1 = getWinner('sf_1');
+  const finalist2 = getWinner('sf_2');
+  const champion  = getWinner('final');
+
+  let html = `<div class="round-title">🏆 <span>Champion</span></div>
+    <div class="round-sub">Pick your World Cup winner — auto-set from the Final</div>`;
+
+  if(!finalist1 && !finalist2) {
+    html += `<div style="color:var(--muted);font-size:13px;padding:20px 0;text-align:center;border:1px dashed var(--border);border-radius:8px;margin-top:8px;">Complete the Semi-Finals to see your finalists here</div>`;
+  } else {
+    // Show the final matchup as champion selector
+    html += `<div class="matchup" style="margin-bottom:16px;">
+      <div class="matchup-label"><span>World Cup Final · Pick your Champion</span></div>
+      <div class="matchup-body">
+        <button class="team-side ${champion===finalist1?'selected':''} ${champion&&champion!==finalist1?'eliminated':''} ${!finalist1?'tbd':''}"
+          ${!finalist1?'disabled':''} ${finalist1?`onclick="pick('final','${finalist1}')"`:''}>
+          <div class="team-flag-lg">${flag(finalist1)}</div>
+          <div class="team-name-lg">${finalist1||'TBD'}</div>
+          <div class="team-tick">${champion===finalist1?'✓':''}</div>
+        </button>
+        <div class="vs-col">vs</div>
+        <button class="team-side ${champion===finalist2?'selected':''} ${champion&&champion!==finalist2?'eliminated':''} ${!finalist2?'tbd':''}"
+          ${!finalist2?'disabled':''} ${finalist2?`onclick="pick('final','${finalist2}')"`:''}>
+          <div class="team-flag-lg">${flag(finalist2)}</div>
+          <div class="team-name-lg">${finalist2||'TBD'}</div>
+          <div class="team-tick">${champion===finalist2?'✓':''}</div>
+        </button>
+      </div>
+    </div>`;
+
+    if(champion) {
+      html += `<div class="champ-card">
+        <div class="champ-lbl">🏆 Your World Cup Champion</div>
+        <div class="champ-pick"><span class="champ-flag">${flag(champion)}</span><span>${champion}</span></div>
+      </div>`;
+    }
+  }
+
+  slide.innerHTML = html;
+  const cnt = document.getElementById(`nav-count-${idx}`);
+  if(cnt){ cnt.textContent=champion?'✓':'?'; cnt.className=`nav-count${champion?' complete':''}`; }
+  const navBtn = document.getElementById(`nav-${idx}`);
+  if(navBtn) navBtn.className=`slide-nav-btn${curSlide===idx?' active':''}${champion?' done':''}`;
+}
+
+function updateProgress() {
+  const total = 31;
+  const done = Object.keys(picks).length;
+  const pct = Math.round(done/total*100);
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-text').textContent = `${done} / ${total} picks`;
+  const allDone = done >= total;
+  document.getElementById('save-btn').disabled = !allDone;
+}
+
+function goSlide(idx) {
+  const totalSlides = ROUNDS.length + 1;
+  if(idx < 0 || idx >= totalSlides) return;
+  curSlide = idx;
+
+  // Move track
+  document.getElementById('slider-track').style.transform = `translateX(-${idx * 100}%)`;
+
+  // Update nav tabs
+  document.querySelectorAll('.slide-nav-btn').forEach((b,i) => {
+    b.classList.toggle('active', i===idx);
+  });
+
+  // Scroll nav tab into view
+  const activeTab = document.getElementById(`nav-${idx}`);
+  if(activeTab) activeTab.scrollIntoView({inline:'center',behavior:'smooth'});
+
+  // Update buttons
+  document.getElementById('prev-btn').disabled = idx === 0;
+  const isLast = idx === totalSlides - 1;
+  document.getElementById('next-btn').style.display = isLast ? 'none' : '';
+  document.getElementById('save-btn').style.display = isLast ? '' : 'none';
+
+  // Scroll to top of slide
+  window.scrollTo(0, 0);
+}
+
+async function savePicks() {
+  const btn = document.getElementById('save-btn');
+  btn.textContent = 'Saving...';
+  btn.disabled = true;
+
+  const formatted = {
+    R32:  R32.map(m=>picks[m.id]).filter(Boolean),
+    R16:  R16.map(m=>picks[m.id]).filter(Boolean),
+    QF:   QF.map(m=>picks[m.id]).filter(Boolean),
+    SF:   SF.map(m=>picks[m.id]).filter(Boolean),
+    FINAL:[picks['final']].filter(Boolean),
+    CHAMPION: picks['final']||null,
+  };
+
+  let saved = false;
+  let errMsg = '';
+
+  try {
+    const res = await fetch(`${WORKER}/picks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: currentUser, picks: formatted })
+    });
+    const data = await res.json();
+    saved = data.ok === true;
+    if (!saved) errMsg = data.error || 'Server returned error';
+  } catch(e) {
+    errMsg = e.message;
+  }
+
+  // Always save locally as backup
+  localStorage.setItem('bp_'+currentUser, JSON.stringify(picks));
+
+  const champ = picks['final'];
+  const box = document.createElement('div');
+  box.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;';
+  box.innerHTML = `
+    <div style="background:var(--surface);border:2px solid ${saved?'var(--gold)':'var(--red)'};border-radius:12px;padding:28px 22px;max-width:320px;width:100%;text-align:center;">
+      <div style="font-size:48px;margin-bottom:10px;">${saved?'🏆':'⚠️'}</div>
+      <div style="font-family:var(--font-d);font-size:22px;font-weight:900;text-transform:uppercase;color:${saved?'var(--gold)':'var(--red)'};margin-bottom:8px;">
+        ${saved ? 'Bracket Saved!' : 'Save Failed'}
+      </div>
+      ${saved
+        ? `<p style="font-size:13px;color:var(--muted);margin-bottom:6px;">Good luck <strong style="color:var(--text)">${currentUser}</strong>!</p>
+           <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Champion: <strong style="color:var(--gold-l)">${flag(champ)} ${champ||'?'}</strong></p>`
+        : `<p style="font-size:13px;color:var(--muted);margin-bottom:8px;">Could not reach server.</p>
+           <p style="font-size:11px;color:var(--red);margin-bottom:16px;word-break:break-all;">${errMsg}</p>
+           <p style="font-size:12px;color:var(--muted);margin-bottom:20px;">✓ Picks saved locally on this device as backup.</p>`
+      }
+      <button onclick="this.parentElement.parentElement.remove();document.getElementById('save-btn').textContent='Save 🏆';document.getElementById('save-btn').disabled=false;"
+        style="width:100%;background:var(--red);color:#fff;font-family:var(--font-d);font-size:15px;font-weight:800;text-transform:uppercase;padding:12px;border:none;border-radius:6px;cursor:pointer;">
+        ${saved ? 'Done ✓' : 'Close'}
+      </button>
+    </div>`;
+  document.body.appendChild(box);
+}
+</script>
+</body>
+</html>
