@@ -9,137 +9,143 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --red:#C8102E;--navy:#0A1628;--navy-mid:#112040;--blue:#1B3A6B;
-  --gold:#F0A500;--gold-l:#FFD060;--silver:#C8C8C8;--bronze:#C87A3A;
-  --green:#00C46A;--bg:#070E1C;--surface:#0D1A30;--surface2:#132038;
-  --surface3:#1A2A48;--text:#F0F4FF;--muted:#7A90B8;--border:#1E3055;
+  --gold:#F0A500;--gold-l:#FFD060;--green:#00C46A;
+  --bg:#070E1C;--surface:#0D1A30;--surface2:#132038;--surface3:#1A2A48;
+  --text:#F0F4FF;--muted:#7A90B8;--border:#1E3055;
   --font-d:'Barlow Condensed',sans-serif;--font-b:'Barlow',sans-serif;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent;}
+button{-webkit-tap-highlight-color:transparent;font-family:var(--font-b);}
 
-/* HEADER */
-.header{background:var(--navy);border-bottom:2px solid var(--red);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;}
-.header-title{font-family:var(--font-d);font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:0.04em;color:var(--text);}
+/* ── HEADER ── */
+.header{background:var(--navy);border-bottom:2px solid var(--red);padding:11px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;}
+.header-title{font-family:var(--font-d);font-size:19px;font-weight:900;text-transform:uppercase;letter-spacing:0.04em;}
 .header-title span{color:var(--red);}
-.header-user{margin-left:auto;font-family:var(--font-d);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);}
-.header-user.active{color:var(--gold);}
+.header-user{margin-left:auto;font-family:var(--font-d);font-size:12px;font-weight:700;text-transform:uppercase;color:var(--gold);display:none;}
 
-/* LOGIN SCREEN */
+/* ── LOGIN ── */
 .login-screen{min-height:calc(100vh - 52px);display:flex;align-items:center;justify-content:center;padding:24px;}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px 28px;width:100%;max-width:360px;}
-.login-title{font-family:var(--font-d);font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px;}
-.login-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
-.login-label{font-family:var(--font-d);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;display:block;}
-.login-select,.login-pin{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--font-b);font-size:15px;padding:10px 14px;margin-bottom:16px;outline:none;-webkit-appearance:none;}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px;width:100%;max-width:330px;}
+.login-title{font-family:var(--font-d);font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:4px;}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.4;}
+.lbl{font-family:var(--font-d);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:5px;display:block;}
+.login-select,.login-pin{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:15px;padding:10px 13px;margin-bottom:14px;outline:none;-webkit-appearance:none;}
 .login-select:focus,.login-pin:focus{border-color:var(--red);}
-.login-pin{font-size:24px;letter-spacing:0.3em;text-align:center;font-weight:700;}
-.login-btn{width:100%;background:var(--red);color:#fff;font-family:var(--font-d);font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;padding:12px;border:none;border-radius:6px;cursor:pointer;margin-top:4px;transition:background 0.15s;}
-.login-btn:hover{background:var(--red);opacity:0.85;}
-.login-err{color:var(--red);font-size:13px;margin-top:10px;font-weight:600;display:none;}
+.login-pin{font-size:22px;letter-spacing:0.3em;text-align:center;font-weight:700;}
+.login-btn{width:100%;background:var(--red);color:#fff;font-family:var(--font-d);font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;padding:12px;border:none;border-radius:6px;cursor:pointer;}
+.login-err{color:var(--red);font-size:12px;margin-top:8px;font-weight:600;display:none;}
 
-/* MAIN */
-.main{max-width:700px;margin:0 auto;padding:24px 16px 80px;}
+/* ── SLIDE NAV BAR ── */
+.slide-nav{background:var(--navy-mid);border-bottom:1px solid var(--border);display:flex;align-items:stretch;position:sticky;top:52px;z-index:100;overflow-x:auto;scrollbar-width:none;}
+.slide-nav::-webkit-scrollbar{display:none;}
+.slide-nav-btn{flex:1;min-width:80px;padding:10px 6px;font-family:var(--font-d);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color 0.15s;}
+.slide-nav-btn:hover{color:var(--text);}
+.slide-nav-btn.active{color:var(--white);border-bottom-color:var(--red);}
+.slide-nav-btn.done{color:var(--green);}
+.slide-nav-btn.active.done{border-bottom-color:var(--green);}
+.nav-count{font-size:9px;font-weight:800;padding:1px 5px;border-radius:8px;background:var(--surface3);}
+.nav-count.complete{background:rgba(0,196,106,0.2);color:var(--green);}
 
-/* ROUND SECTION */
-.round-section{margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
-.round-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:linear-gradient(90deg,var(--navy-mid),var(--blue));border-bottom:2px solid var(--red);}
-.round-name{font-family:var(--font-d);font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:#fff;}
-.round-pts{font-family:var(--font-d);font-size:12px;font-weight:700;color:var(--gold);letter-spacing:0.06em;}
-.round-info{font-size:12px;color:var(--muted);padding:8px 16px 6px;font-style:italic;}
-.round-picks{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px 12px;}
-.round-pick-btn{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;cursor:pointer;font-family:var(--font-d);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;color:var(--muted);transition:all 0.15s;text-align:left;}
-.round-pick-btn:hover{border-color:rgba(200,16,46,0.4);color:var(--text);}
-.round-pick-btn.selected{background:rgba(200,16,46,0.12);border-color:var(--red);color:var(--text);}
-.round-pick-btn.champion-btn{grid-column:1/-1;justify-content:center;padding:12px;font-size:14px;border-color:var(--gold);}
-.round-pick-btn.champion-btn.selected{background:rgba(240,165,0,0.15);border-color:var(--gold);color:var(--gold);}
-.pick-flag{font-size:18px;flex-shrink:0;}
-.pick-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.pick-check{font-size:14px;flex-shrink:0;opacity:0;transition:opacity 0.15s;}
-.round-pick-btn.selected .pick-check{opacity:1;}
+/* ── SLIDER ── */
+.slider-outer{overflow:hidden;width:100%;}
+.slider-track{display:flex;transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);will-change:transform;}
+.slide{min-width:100%;padding:16px 14px 100px;}
 
-/* LOCKED state */
-.round-pick-btn.locked{opacity:0.5;cursor:default;pointer-events:none;}
-.round-pick-btn.locked.selected{opacity:1;}
+/* ── ROUND HEADER ── */
+.round-title{font-family:var(--font-d);font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px;}
+.round-title span{color:var(--red);}
+.round-sub{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:16px;}
 
-/* COUNT badge */
-.round-count{font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;background:var(--surface3);color:var(--muted);}
-.round-count.done{background:rgba(0,196,106,0.15);color:var(--green);}
+/* ── MATCHUP CARD ── */
+.matchup{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px;}
+.matchup-label{padding:5px 12px 4px;background:var(--navy-mid);font-family:var(--font-d);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);display:flex;justify-content:space-between;align-items:center;}
+.matchup-label .winner-tag{color:var(--green);font-size:9px;font-weight:800;}
+.matchup-body{display:grid;grid-template-columns:1fr 36px 1fr;}
+.team-side{display:flex;flex-direction:column;align-items:center;padding:12px 10px 10px;gap:5px;cursor:pointer;border:none;background:transparent;color:var(--text);transition:background 0.12s;width:100%;}
+.team-side:hover{background:var(--surface2);}
+.team-side.selected{background:rgba(200,16,46,0.1);}
+.team-side.eliminated{opacity:0.35;}
+.team-side.tbd{opacity:0.35;cursor:default;pointer-events:none;}
+.team-flag-lg{font-size:28px;line-height:1;}
+.team-name-lg{font-family:var(--font-d);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.02em;text-align:center;line-height:1.2;}
+.team-tick{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;transition:all 0.15s;}
+.team-side.selected .team-tick{background:var(--red);border-color:var(--red);color:#fff;}
+.vs-col{display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:11px;font-weight:700;color:var(--muted);}
 
-/* SAVE BUTTON */
-.save-bar{position:fixed;bottom:0;left:0;right:0;background:var(--navy);border-top:1px solid var(--border);padding:12px 20px;display:flex;gap:12px;align-items:center;}
-.save-btn{flex:1;background:var(--red);color:#fff;font-family:var(--font-d);font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;padding:12px;border:none;border-radius:6px;cursor:pointer;transition:background 0.15s;}
-.save-btn:disabled{opacity:0.4;cursor:default;}
-.save-status{font-size:12px;color:var(--muted);font-weight:600;}
-.save-status.ok{color:var(--green);}
+/* ── CHAMPION REVEAL ── */
+.champ-card{background:linear-gradient(135deg,rgba(240,165,0,0.1),rgba(240,165,0,0.18));border:2px solid var(--gold);border-radius:12px;padding:24px;text-align:center;margin-top:8px;}
+.champ-lbl{font-family:var(--font-d);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.16em;color:var(--gold);margin-bottom:12px;}
+.champ-pick{font-family:var(--font-d);font-size:24px;font-weight:900;text-transform:uppercase;color:var(--gold-l);display:flex;align-items:center;justify-content:center;gap:10px;}
+.champ-flag{font-size:44px;}
 
-/* PROGRESS */
-.progress-bar-wrap{height:3px;background:var(--surface3);margin-bottom:20px;border-radius:2px;overflow:hidden;}
-.progress-bar-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.3s;}
-.progress-label{font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600;}
-
-@media(max-width:480px){
-  .round-picks{grid-template-columns:1fr;}
-  .round-pick-btn.champion-btn{grid-column:1;}
-  .login-card{padding:24px 18px;}
-}
+/* ── BOTTOM NAV ── */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--navy);border-top:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.prev-btn,.next-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--font-d);font-size:13px;font-weight:800;text-transform:uppercase;padding:10px 18px;border-radius:6px;cursor:pointer;flex-shrink:0;}
+.prev-btn:disabled,.next-btn:disabled{opacity:0.3;cursor:default;}
+.save-btn{flex:1;background:var(--red);color:#fff;font-family:var(--font-d);font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:10px;border:none;border-radius:6px;cursor:pointer;}
+.save-btn:disabled{opacity:0.35;cursor:default;}
+.mid-info{flex:1;text-align:center;}
+.prog-bar{height:3px;background:var(--surface3);border-radius:2px;margin-bottom:3px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.3s;}
+.prog-text{font-size:10px;color:var(--muted);font-weight:600;}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div style="font-size:22px;">⚽</div>
+  <div style="font-size:18px">⚽</div>
   <div class="header-title">Foreverland <span>2026</span></div>
-  <div class="header-user" id="header-user">Not logged in</div>
+  <div class="header-user" id="header-user"></div>
 </div>
 
 <!-- LOGIN -->
 <div class="login-screen" id="login-screen">
   <div class="login-card">
     <div class="login-title">Bracket <span style="color:var(--red)">Picks</span></div>
-    <div class="login-sub">Select your name and enter your PIN to submit your knockout bracket.</div>
-    <label class="login-label">Your name</label>
+    <div class="login-sub">Pick the winner of every match — your picks cascade automatically to the next round.</div>
+    <label class="lbl">Your name</label>
     <select class="login-select" id="login-name">
-      <option value="">— Select your name —</option>
+      <option value="">— Select name —</option>
     </select>
-    <label class="login-label">4-digit PIN</label>
+    <label class="lbl">4-digit PIN</label>
     <input class="login-pin" id="login-pin" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
-    <button class="login-btn" onclick="doLogin()">Enter Bracket →</button>
-    <div class="login-err" id="login-err">Incorrect PIN. Try again.</div>
+    <button class="login-btn" onclick="doLogin()">Start Bracket →</button>
+    <div class="login-err" id="login-err"></div>
   </div>
 </div>
 
 <!-- PICKER -->
 <div id="picker-screen" style="display:none">
-  <div class="main">
-    <div class="progress-label" id="progress-label"></div>
-    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
-    <div id="rounds-container"></div>
+  <!-- Round tabs -->
+  <div class="slide-nav" id="slide-nav"></div>
+
+  <!-- Slides -->
+  <div class="slider-outer">
+    <div class="slider-track" id="slider-track"></div>
   </div>
-  <div class="save-bar">
-    <div class="save-status" id="save-status">Make your picks above</div>
-    <button class="save-btn" id="save-btn" onclick="savePicks()" disabled>Save Picks</button>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <button class="prev-btn" id="prev-btn" onclick="goSlide(curSlide-1)" disabled>← Back</button>
+    <div class="mid-info">
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="prog-text" id="prog-text">0 / 31 picks</div>
+    </div>
+    <button class="next-btn" id="next-btn" onclick="goSlide(curSlide+1)">Next →</button>
+    <button class="save-btn" id="save-btn" onclick="savePicks()" style="display:none" disabled>Save 🏆</button>
   </div>
 </div>
 
 <script>
-// ─── CONFIG ──────────────────────────────────────────────────────────────────
-// Passwords: name → 4-digit PIN
+const WORKER = 'https://wc2026.drsteelheader.workers.dev';
+
 const PASSWORDS = {
-  "Matty chom":    "1234",
-  "Sambath":       "2345",
-  "Master":        "3456",
-  "AJ":            "4567",
-  "Huy":           "5678",
-  "Minh":          "6789",
-  "Sith":          "7890",
-  "Tigers nephew": "8901",
-  "Rolando":       "9012",
-  "Peter H":       "0123",
-  "Shanny":        "1357",
-  "Noks":          "2468",
-  "Carlo":         "3579",
+  "Matty chom":"1234","Sambath":"2345","Master":"3456","AJ":"4567",
+  "Huy":"5678","Minh":"6789","Sith":"7890","Tigers nephew":"8901",
+  "Rolando":"9012","Peter H":"0123","Shanny":"1357","Noks":"2468","Carlo":"3579"
 };
 
-const FLAGS = {
+const F = {
   "MEXICO":"🇲🇽","SOUTH AFRICA":"🇿🇦","KOREA REPUBLIC":"🇰🇷","CZECHIA":"🇨🇿",
   "CANADA":"🇨🇦","BOSNIA":"🇧🇦","QATAR":"🇶🇦","SWITZERLAND":"🇨🇭",
   "BRAZIL":"🇧🇷","MOROCCO":"🇲🇦","HAITI":"🇭🇹","SCOTLAND":"🏴󠁧󠁢󠁳󠁣󠁴󠁿",
@@ -153,226 +159,370 @@ const FLAGS = {
   "PORTUGAL":"🇵🇹","CONGO DR":"🇨🇩","UZBEKISTAN":"🇺🇿","COLOMBIA":"🇨🇴",
   "ENGLAND":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","CROATIA":"🇭🇷","GHANA":"🇬🇭","PANAMA":"🇵🇦"
 };
+const flag = t => t ? (F[t]||'🏳') : '❓';
 
-const ALL_TEAMS = Object.keys(FLAGS);
-
-const ROUNDS = [
-  { key:'R32',      label:'Round of 32',    pts:2,  count:16, info:'Pick 16 teams to advance from the Round of 32' },
-  { key:'R16',      label:'Round of 16',    pts:4,  count:8,  info:'Pick 8 Quarter-Final qualifiers' },
-  { key:'QF',       label:'Quarter-Finals', pts:6,  count:4,  info:'Pick 4 Semi-Final qualifiers' },
-  { key:'SF',       label:'Semi-Finals',    pts:10, count:2,  info:'Pick 2 teams to reach the Final' },
-  { key:'FINAL',    label:'Final',          pts:15, count:1,  info:'Pick 1 team to WIN the Final' },
-  { key:'CHAMPION', label:'Champion 🏆',    pts:20, count:1,  info:'Pick your World Cup Champion (same as Final winner)' },
+// ── BRACKET STRUCTURE ────────────────────────────────────────────────────────
+// Fixed R32 matchups (confirmed by FIFA/Yahoo/ESPN)
+const R32 = [
+  // Match ID, home, away — order matters for R16 pairing
+  {id:'r32_1', home:'SOUTH AFRICA', away:'CANADA'},        // → R16 slot 1
+  {id:'r32_2', home:'BRAZIL',       away:'JAPAN'},          // → R16 slot 1
+  {id:'r32_3', home:'GERMANY',      away:'PARAGUAY'},       // → R16 slot 2
+  {id:'r32_4', home:'NETHERLANDS',  away:'MOROCCO'},        // → R16 slot 2
+  {id:'r32_5', home:'COTE DIVOIRE', away:'NORWAY'},         // → R16 slot 3
+  {id:'r32_6', home:'FRANCE',       away:'SWEDEN'},         // → R16 slot 3
+  {id:'r32_7', home:'MEXICO',       away:'ECUADOR'},        // → R16 slot 4
+  {id:'r32_8', home:'ENGLAND',      away:'CONGO DR'},       // → R16 slot 4
+  {id:'r32_9', home:'BELGIUM',      away:'SENEGAL'},        // → R16 slot 5
+  {id:'r32_10',home:'USA',          away:'BOSNIA'},         // → R16 slot 5
+  {id:'r32_11',home:'PORTUGAL',     away:'CROATIA'},        // → R16 slot 6
+  {id:'r32_12',home:'SWITZERLAND',  away:'ALGERIA'},        // → R16 slot 6
+  {id:'r32_13',home:'AUSTRALIA',    away:'EGYPT'},          // → R16 slot 7
+  {id:'r32_14',home:'SPAIN',        away:'AUSTRIA'},        // → R16 slot 7
+  {id:'r32_15',home:'ARGENTINA',    away:'CABO VERDE'},     // → R16 slot 8
+  {id:'r32_16',home:'COLOMBIA',     away:'GHANA'},          // → R16 slot 8
 ];
 
-const STORAGE_KEY_PREFIX = 'bracket_picks_';
+// R16: winners of consecutive R32 pairs
+const R16 = [
+  {id:'r16_1', a:'r32_1',  b:'r32_2'},   // winner m1 vs winner m2
+  {id:'r16_2', a:'r32_3',  b:'r32_4'},
+  {id:'r16_3', a:'r32_5',  b:'r32_6'},
+  {id:'r16_4', a:'r32_7',  b:'r32_8'},
+  {id:'r16_5', a:'r32_9',  b:'r32_10'},
+  {id:'r16_6', a:'r32_11', b:'r32_12'},
+  {id:'r16_7', a:'r32_13', b:'r32_14'},
+  {id:'r16_8', a:'r32_15', b:'r32_16'},
+];
+
+const QF = [
+  {id:'qf_1', a:'r16_1', b:'r16_2'},
+  {id:'qf_2', a:'r16_3', b:'r16_4'},
+  {id:'qf_3', a:'r16_5', b:'r16_6'},
+  {id:'qf_4', a:'r16_7', b:'r16_8'},
+];
+
+const SF = [
+  {id:'sf_1', a:'qf_1', b:'qf_2'},
+  {id:'sf_2', a:'qf_3', b:'qf_4'},
+];
+
+const FINAL = [{id:'final', a:'sf_1', b:'sf_2'}];
+
+const ROUNDS = [
+  {key:'r32', label:'Round of 32', pts:2,  matches:R32, fixed:true},
+  {key:'r16', label:'Round of 16', pts:4,  matches:R16, fixed:false},
+  {key:'qf',  label:'Quarter-Finals', pts:6,  matches:QF,  fixed:false},
+  {key:'sf',  label:'Semi-Finals', pts:10, matches:SF,  fixed:false},
+  {key:'final',label:'Final',      pts:15, matches:FINAL,fixed:false},
+];
 // ─────────────────────────────────────────────────────────────────────────────
 
+let picks = {}; // matchId → teamName
 let currentUser = null;
-let picks = { R32:[], R16:[], QF:[], SF:[], FINAL:[], CHAMPION:null };
+let curSlide = 0;
 
-// Populate login dropdown
+// Login setup
 const sel = document.getElementById('login-name');
-Object.keys(PASSWORDS).forEach(name => {
-  const opt = document.createElement('option');
-  opt.value = name;
-  opt.textContent = name;
-  sel.appendChild(opt);
+Object.keys(PASSWORDS).forEach(n => {
+  const o = document.createElement('option');
+  o.value = n; o.textContent = n; sel.appendChild(o);
 });
-
-// PIN input — numbers only
 document.getElementById('login-pin').addEventListener('input', e => {
   e.target.value = e.target.value.replace(/\D/g,'').slice(0,4);
 });
 document.getElementById('login-pin').addEventListener('keydown', e => {
-  if (e.key === 'Enter') doLogin();
+  if(e.key==='Enter') doLogin();
 });
 
 function doLogin() {
   const name = document.getElementById('login-name').value;
-  const pin = document.getElementById('login-pin').value;
-  const err = document.getElementById('login-err');
+  const pin  = document.getElementById('login-pin').value;
+  const err  = document.getElementById('login-err');
   err.style.display = 'none';
-  if (!name) { err.textContent = 'Please select your name.'; err.style.display = 'block'; return; }
-  if (PASSWORDS[name] !== pin) { err.textContent = 'Incorrect PIN. Try again.'; err.style.display = 'block'; return; }
+  if(!name){err.textContent='Select your name.';err.style.display='block';return;}
+  if(PASSWORDS[name]!==pin){err.textContent='Incorrect PIN. Try again.';err.style.display='block';return;}
   currentUser = name;
   document.getElementById('header-user').textContent = name;
-  document.getElementById('header-user').classList.add('active');
+  document.getElementById('header-user').style.display = 'block';
   document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('picker-screen').style.display = '';
-  loadSavedPicks();
-  buildPicker();
+  document.getElementById('picker-screen').style.display = 'block';
+  try{ const s=localStorage.getItem('bp_'+currentUser); if(s) picks=JSON.parse(s); }catch(e){}
+  buildUI();
 }
 
-function loadSavedPicks() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY_PREFIX + currentUser);
-    if (saved) {
-      picks = JSON.parse(saved);
-    } else {
-      picks = { R32:[], R16:[], QF:[], SF:[], FINAL:[], CHAMPION:null };
+function getWinner(id) { return picks[id] || null; }
+
+function getMatchTeams(match, fixed) {
+  if(fixed) return {home: match.home, away: match.away};
+  return {home: getWinner(match.a), away: getWinner(match.b)};
+}
+
+function cascadeClear(changedId) {
+  // Clear any downstream match that depended on this match's winner
+  const all = [...R16,...QF,...SF,...FINAL];
+  all.forEach(m => {
+    if(m.a === changedId || m.b === changedId) {
+      const {home, away} = getMatchTeams(m, false);
+      const cur = picks[m.id];
+      if(cur && cur !== home && cur !== away) {
+        delete picks[m.id];
+        cascadeClear(m.id);
+      }
     }
-  } catch(e) {
-    picks = { R32:[], R16:[], QF:[], SF:[], FINAL:[], CHAMPION:null };
+  });
+}
+
+function pick(matchId, team) {
+  picks[matchId] = team;
+  cascadeClear(matchId);
+  localStorage.setItem('bp_'+currentUser, JSON.stringify(picks));
+  renderAll();
+
+  // Check if current round is now complete — auto-advance after short delay
+  const roundIdx = ROUNDS.findIndex(r => r.matches.some(m => m.id === matchId));
+  if (roundIdx >= 0) {
+    const round = ROUNDS[roundIdx];
+    const allDone = round.matches.every(m => picks[m.id]);
+    if (allDone && curSlide === roundIdx) {
+      setTimeout(() => goSlide(roundIdx + 1), 500);
+    }
+  }
+  // Also auto-advance from champion slide when final is picked
+  if (matchId === 'final' && curSlide === ROUNDS.length) {
+    // already on last slide, nothing to advance to
   }
 }
 
-function buildPicker() {
-  const container = document.getElementById('rounds-container');
-  container.innerHTML = '';
+// ── BUILD UI ──────────────────────────────────────────────────────────────────
+function buildUI() {
+  const nav = document.getElementById('slide-nav');
+  const track = document.getElementById('slider-track');
+  nav.innerHTML = ''; track.innerHTML = '';
 
-  ROUNDS.forEach(round => {
-    const { key, label, pts, count, info } = round;
-    const isChamp = key === 'CHAMPION';
-
-    const section = document.createElement('div');
-    section.className = 'round-section';
-    section.id = `round-${key}`;
-
-    const current = isChamp ? (picks.CHAMPION ? [picks.CHAMPION] : []) : (picks[key] || []);
-    const done = current.length === count;
-
-    section.innerHTML = `
-      <div class="round-header">
-        <div class="round-name">${label}</div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span class="round-count ${done?'done':''}" id="count-${key}">${current.length}/${count}</span>
-          <span class="round-pts">${pts}pt${pts>1?'s':''} each</span>
-        </div>
-      </div>
-      <div class="round-info">${info}</div>
-      <div class="round-picks" id="picks-${key}"></div>`;
-    container.appendChild(section);
-    renderRoundPicks(key);
-  });
-  updateProgress();
-}
-
-function renderRoundPicks(key) {
-  const isChamp = key === 'CHAMPION';
-  const grid = document.getElementById(`picks-${key}`);
-  const current = isChamp ? (picks.CHAMPION ? [picks.CHAMPION] : []) : (picks[key] || []);
-  const round = ROUNDS.find(r => r.key === key);
-  const max = round.count;
-
-  grid.innerHTML = '';
-  ALL_TEAMS.forEach(team => {
-    const flag = FLAGS[team] || '🏳';
-    const selected = isChamp ? picks.CHAMPION === team : (picks[key]||[]).includes(team);
-    const atMax = !selected && current.length >= max;
-
+  ROUNDS.forEach((round, idx) => {
+    // Nav tab
     const btn = document.createElement('button');
-    btn.className = `round-pick-btn${selected?' selected':''}${atMax?' locked':''}${isChamp?' champion-btn':''}`;
-    btn.innerHTML = `<span class="pick-flag">${flag}</span><span class="pick-name">${team}</span><span class="pick-check">✓</span>`;
-    btn.onclick = () => togglePick(key, team);
-    grid.appendChild(btn);
+    btn.className = 'slide-nav-btn' + (idx===0?' active':'');
+    btn.id = `nav-${idx}`;
+    btn.onclick = () => goSlide(idx);
+    btn.innerHTML = `<span>${round.label}</span><span class="nav-count" id="nav-count-${idx}">0/${round.matches.length}</span>`;
+    nav.appendChild(btn);
+
+    // Slide
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    slide.id = `slide-${idx}`;
+    track.appendChild(slide);
   });
+
+  // Champion slide
+  const champNav = document.createElement('button');
+  champNav.className = 'slide-nav-btn';
+  champNav.id = `nav-${ROUNDS.length}`;
+  champNav.onclick = () => goSlide(ROUNDS.length);
+  champNav.innerHTML = `<span>🏆 Champion</span><span class="nav-count" id="nav-count-${ROUNDS.length}">?</span>`;
+  nav.appendChild(champNav);
+
+  const champSlide = document.createElement('div');
+  champSlide.className = 'slide';
+  champSlide.id = `slide-${ROUNDS.length}`;
+  track.appendChild(champSlide);
+
+  renderAll();
+  goSlide(0);
 }
 
-function togglePick(key, team) {
-  const isChamp = key === 'CHAMPION';
-  const round = ROUNDS.find(r => r.key === key);
+function renderAll() {
+  ROUNDS.forEach((round, idx) => renderSlide(idx, round));
+  renderChampSlide();
+  updateProgress();
+}
 
-  if (isChamp) {
-    picks.CHAMPION = picks.CHAMPION === team ? null : team;
-    // Auto-sync FINAL if champion picked
-    if (picks.CHAMPION && !(picks.FINAL||[]).includes(picks.CHAMPION)) {
-      if ((picks.FINAL||[]).length < 1) picks.FINAL = [picks.CHAMPION];
-    }
+function renderSlide(idx, round) {
+  const slide = document.getElementById(`slide-${idx}`);
+  const done = round.matches.filter(m => picks[m.id]).length;
+  const total = round.matches.length;
+
+  let html = `<div class="round-title">${round.label} <span style="font-size:14px;color:var(--gold)">${round.pts}pts each</span></div>
+    <div class="round-sub">${done}/${total} picks made · pick the winner of each match</div>`;
+
+  round.matches.forEach((match, mi) => {
+    const {home, away} = getMatchTeams(match, round.fixed);
+    const winner = picks[match.id] || null;
+    const tbd = !home || !away;
+    const matchNum = round.fixed ? `Match ${mi+1}` : (tbd ? 'Awaiting earlier picks' : 'Pick winner');
+
+    html += `<div class="matchup">
+      <div class="matchup-label">
+        <span>${matchNum}</span>
+        ${winner ? `<span class="winner-tag">✓ ${winner}</span>` : ''}
+      </div>
+      <div class="matchup-body">
+        <button class="team-side ${winner===home?'selected':''} ${winner&&winner!==home?'eliminated':''} ${!home?'tbd':''}"
+          ${!home?'disabled':''} onclick="pick('${match.id}','${home||''}')">
+          <div class="team-flag-lg">${flag(home)}</div>
+          <div class="team-name-lg">${home||'TBD'}</div>
+          <div class="team-tick">${winner===home?'✓':''}</div>
+        </button>
+        <div class="vs-col">vs</div>
+        <button class="team-side ${winner===away?'selected':''} ${winner&&winner!==away?'eliminated':''} ${!away?'tbd':''}"
+          ${!away?'disabled':''} onclick="pick('${match.id}','${away||''}')">
+          <div class="team-flag-lg">${flag(away)}</div>
+          <div class="team-name-lg">${away||'TBD'}</div>
+          <div class="team-tick">${winner===away?'✓':''}</div>
+        </button>
+      </div>
+    </div>`;
+  });
+
+  slide.innerHTML = html;
+
+  // Update nav count
+  const cnt = document.getElementById(`nav-count-${idx}`);
+  if(cnt){ cnt.textContent=`${done}/${total}`; cnt.className=`nav-count${done===total?' complete':''}`; }
+  const navBtn = document.getElementById(`nav-${idx}`);
+  if(navBtn) navBtn.className=`slide-nav-btn${curSlide===idx?' active':''}${done===total?' done':''}`;
+}
+
+function renderChampSlide() {
+  const idx = ROUNDS.length;
+  const slide = document.getElementById(`slide-${idx}`);
+  const finalist1 = getWinner('sf_1');
+  const finalist2 = getWinner('sf_2');
+  const champion  = getWinner('final');
+
+  let html = `<div class="round-title">🏆 <span>Champion</span></div>
+    <div class="round-sub">Pick your World Cup winner — auto-set from the Final</div>`;
+
+  if(!finalist1 && !finalist2) {
+    html += `<div style="color:var(--muted);font-size:13px;padding:20px 0;text-align:center;border:1px dashed var(--border);border-radius:8px;margin-top:8px;">Complete the Semi-Finals to see your finalists here</div>`;
   } else {
-    if (!picks[key]) picks[key] = [];
-    const idx = picks[key].indexOf(team);
-    if (idx >= 0) {
-      picks[key].splice(idx, 1);
-    } else {
-      if (picks[key].length >= round.count) return;
-      picks[key].push(team);
+    // Show the final matchup as champion selector
+    html += `<div class="matchup" style="margin-bottom:16px;">
+      <div class="matchup-label"><span>World Cup Final · Pick your Champion</span></div>
+      <div class="matchup-body">
+        <button class="team-side ${champion===finalist1?'selected':''} ${champion&&champion!==finalist1?'eliminated':''} ${!finalist1?'tbd':''}"
+          ${!finalist1?'disabled':''} onclick="pick('final','${finalist1||''}')">
+          <div class="team-flag-lg">${flag(finalist1)}</div>
+          <div class="team-name-lg">${finalist1||'TBD'}</div>
+          <div class="team-tick">${champion===finalist1?'✓':''}</div>
+        </button>
+        <div class="vs-col">vs</div>
+        <button class="team-side ${champion===finalist2?'selected':''} ${champion&&champion!==finalist2?'eliminated':''} ${!finalist2?'tbd':''}"
+          ${!finalist2?'disabled':''} onclick="pick('final','${finalist2||''}')">
+          <div class="team-flag-lg">${flag(finalist2)}</div>
+          <div class="team-name-lg">${finalist2||'TBD'}</div>
+          <div class="team-tick">${champion===finalist2?'✓':''}</div>
+        </button>
+      </div>
+    </div>`;
+
+    if(champion) {
+      html += `<div class="champ-card">
+        <div class="champ-lbl">🏆 Your World Cup Champion</div>
+        <div class="champ-pick"><span class="champ-flag">${flag(champion)}</span><span>${champion}</span></div>
+      </div>`;
     }
   }
 
-  renderRoundPicks(key);
-  // Re-render FINAL if champion changed
-  if (isChamp) renderRoundPicks('FINAL');
-  updateProgress();
-  autoSave();
+  slide.innerHTML = html;
+  const cnt = document.getElementById(`nav-count-${idx}`);
+  if(cnt){ cnt.textContent=champion?'✓':'?'; cnt.className=`nav-count${champion?' complete':''}`; }
+  const navBtn = document.getElementById(`nav-${idx}`);
+  if(navBtn) navBtn.className=`slide-nav-btn${curSlide===idx?' active':''}${champion?' done':''}`;
 }
 
 function updateProgress() {
-  let total = 0, done = 0;
-  ROUNDS.forEach(({ key, count }) => {
-    const isChamp = key === 'CHAMPION';
-    const current = isChamp ? (picks.CHAMPION ? 1 : 0) : (picks[key]||[]).length;
-    total += count;
-    done += current;
-    // Update count badge
-    const badge = document.getElementById(`count-${key}`);
-    if (badge) {
-      badge.textContent = `${current}/${count}`;
-      badge.className = `round-count${current===count?' done':''}`;
-    }
+  const total = 31;
+  const done = Object.keys(picks).length;
+  const pct = Math.round(done/total*100);
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-text').textContent = `${done} / ${total} picks`;
+  const allDone = done >= total;
+  document.getElementById('save-btn').disabled = !allDone;
+}
+
+function goSlide(idx) {
+  const totalSlides = ROUNDS.length + 1;
+  if(idx < 0 || idx >= totalSlides) return;
+  curSlide = idx;
+
+  // Move track
+  document.getElementById('slider-track').style.transform = `translateX(-${idx * 100}%)`;
+
+  // Update nav tabs
+  document.querySelectorAll('.slide-nav-btn').forEach((b,i) => {
+    b.classList.toggle('active', i===idx);
   });
 
-  const pct = Math.round(done/total*100);
-  document.getElementById('progress-bar').style.width = pct+'%';
-  document.getElementById('progress-label').textContent = `${done} of ${total} picks made (${pct}%)`;
+  // Scroll nav tab into view
+  const activeTab = document.getElementById(`nav-${idx}`);
+  if(activeTab) activeTab.scrollIntoView({inline:'center',behavior:'smooth'});
 
-  const complete = done === total;
-  document.getElementById('save-btn').disabled = !complete;
-  document.getElementById('save-status').textContent = complete
-    ? '✓ All picks made — ready to save!'
-    : `${total - done} picks remaining`;
-  document.getElementById('save-status').className = 'save-status' + (complete?' ok':'');
+  // Update buttons
+  document.getElementById('prev-btn').disabled = idx === 0;
+  const isLast = idx === totalSlides - 1;
+  document.getElementById('next-btn').style.display = isLast ? 'none' : '';
+  document.getElementById('save-btn').style.display = isLast ? '' : 'none';
+
+  // Scroll to top of slide
+  window.scrollTo(0, 0);
 }
-
-function autoSave() {
-  try {
-    localStorage.setItem(STORAGE_KEY_PREFIX + currentUser, JSON.stringify(picks));
-  } catch(e) {}
-}
-
-const WORKER_URL = 'https://wc2026.drsteelheader.workers.dev';
 
 async function savePicks() {
   const btn = document.getElementById('save-btn');
-  const status = document.getElementById('save-status');
   btn.textContent = 'Saving...';
   btn.disabled = true;
 
+  const formatted = {
+    R32:  R32.map(m=>picks[m.id]).filter(Boolean),
+    R16:  R16.map(m=>picks[m.id]).filter(Boolean),
+    QF:   QF.map(m=>picks[m.id]).filter(Boolean),
+    SF:   SF.map(m=>picks[m.id]).filter(Boolean),
+    FINAL:[picks['final']].filter(Boolean),
+    CHAMPION: picks['final']||null,
+  };
+
+  let saved = false;
+  let errMsg = '';
+
   try {
-    const res = await fetch(`${WORKER_URL}/picks`, {
+    const res = await fetch(`${WORKER}/picks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: currentUser, picks })
+      body: JSON.stringify({ name: currentUser, picks: formatted })
     });
     const data = await res.json();
-    if (data.ok) {
-      status.textContent = `✓ Picks saved for ${currentUser}!`;
-      status.className = 'save-status ok';
-      btn.textContent = '✓ Saved!';
-      showConfirmation();
-    } else {
-      throw new Error('Save failed');
-    }
-  } catch (err) {
-    // Fallback — save locally and show JSON
-    autoSave();
-    status.textContent = '⚠ Could not reach server — picks saved locally';
-    status.className = 'save-status';
-    btn.textContent = 'Save Picks';
-    btn.disabled = false;
-    showConfirmation();
+    saved = data.ok === true;
+    if (!saved) errMsg = data.error || 'Server returned error';
+  } catch(e) {
+    errMsg = e.message;
   }
-}
 
-function showConfirmation() {
+  // Always save locally as backup
+  localStorage.setItem('bp_'+currentUser, JSON.stringify(picks));
+
+  const champ = picks['final'];
   const box = document.createElement('div');
-  box.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;`;
+  box.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;';
   box.innerHTML = `
-    <div style="background:var(--surface);border:1px solid var(--gold);border-radius:10px;padding:28px;max-width:380px;width:100%;text-align:center;">
-      <div style="font-size:48px;margin-bottom:12px;">🏆</div>
-      <div style="font-family:var(--font-d);font-size:24px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Picks Submitted!</div>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Your bracket has been saved, <strong style="color:var(--text)">${currentUser}</strong>. Good luck!</p>
-      <button onclick="this.parentElement.parentElement.remove();" style="width:100%;background:var(--red);color:#fff;font-family:var(--font-d);font-size:14px;font-weight:800;text-transform:uppercase;padding:11px;border:none;border-radius:6px;cursor:pointer;">Done</button>
+    <div style="background:var(--surface);border:2px solid ${saved?'var(--gold)':'var(--red)'};border-radius:12px;padding:28px 22px;max-width:320px;width:100%;text-align:center;">
+      <div style="font-size:48px;margin-bottom:10px;">${saved?'🏆':'⚠️'}</div>
+      <div style="font-family:var(--font-d);font-size:22px;font-weight:900;text-transform:uppercase;color:${saved?'var(--gold)':'var(--red)'};margin-bottom:8px;">
+        ${saved ? 'Bracket Saved!' : 'Save Failed'}
+      </div>
+      ${saved
+        ? `<p style="font-size:13px;color:var(--muted);margin-bottom:6px;">Good luck <strong style="color:var(--text)">${currentUser}</strong>!</p>
+           <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Champion: <strong style="color:var(--gold-l)">${flag(champ)} ${champ||'?'}</strong></p>`
+        : `<p style="font-size:13px;color:var(--muted);margin-bottom:8px;">Could not reach server.</p>
+           <p style="font-size:11px;color:var(--red);margin-bottom:16px;word-break:break-all;">${errMsg}</p>
+           <p style="font-size:12px;color:var(--muted);margin-bottom:20px;">✓ Picks saved locally on this device as backup.</p>`
+      }
+      <button onclick="this.parentElement.parentElement.remove();document.getElementById('save-btn').textContent='Save 🏆';document.getElementById('save-btn').disabled=false;"
+        style="width:100%;background:var(--red);color:#fff;font-family:var(--font-d);font-size:15px;font-weight:800;text-transform:uppercase;padding:12px;border:none;border-radius:6px;cursor:pointer;">
+        ${saved ? 'Done ✓' : 'Close'}
+      </button>
     </div>`;
   document.body.appendChild(box);
 }
